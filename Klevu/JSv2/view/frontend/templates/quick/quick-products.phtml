@@ -4,6 +4,8 @@
             <div class="klevuResultsBlock">
                 <div class="klevuSuggestionHeading"><span class="klevuHeadingText"><%=helper.translate("Products")%></span></div>
                 <div class="klevuQuickSearchResults" data-section="productList" id="productsList">
+                    <%=helper.render('filters',scope,data,"productList") %>
+
                     <div class="klevuProductsViewAll">
                         <a href="<%=helper.buildUrl(data.settings.landingUrl,'q',helper.stripHtml(data.settings.term))%>" target="_parent"><%=helper.translate("View All")%></a>
                     </div>

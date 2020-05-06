@@ -12,13 +12,19 @@
                         <a href="<%=dataLocal.url%>" class="klevuProductClick"><span class="kuprodImgSpan"><img src="<%=dataLocal.image%>" alt="<%=dataLocal.name%>" class="kuProdImg"></span></a>
                     </div>
                 <% } %>
+                <div class="kuQuickView">
+                    <button data-id="<%=dataLocal.id%>" class="kuQuickViewBtn">Quick view</button>
+                </div>
             </div>
             <% var desc = [dataLocal.summaryAttribute,dataLocal.packageText,dataLocal.summaryDescription].filter(function(el) { return el; }); desc = desc.join(" "); %>
             <div class="kuProdBottom">
                 <div class="kuNameDesc">
                     <div class="kuName"><a href="<%=dataLocal.url%>" class="klevuProductClick"><%=dataLocal.name%></a></div>
-                    <div class="kuDesc"><%=desc%></div>
-                </div>                   
+                    <div class="kuDesc">
+                        <%=desc%>
+                        <%=helper.render('landingProductSwatch',scope,data,dataLocal) %>
+                    </div>
+                </div>
                 <div class="kuPrice">
                     <% if(dataLocal.ondiscount && dataLocal.ondiscount == "true") { %>
                         <% if(dataLocal.salePrice ) { %><div class="kuSalePrice kuSpecialPrice"><%=helper.processCurrency(dataLocal.currency,parseFloat(dataLocal.salePrice) )%></div><% } %>
@@ -28,8 +34,96 @@
                     <% } %>
                     <div class="kuClearBoth"></div>
                 </div>
+                <%=helper.render('landingPageProductAddToCart',scope,data,dataLocal) %>
             </div>
-            <div class="kuClearLeft"></div>                
+            <div class="kuClearLeft"></div>
         </div>
     </li>
 </script>
+<script type="template/klevu" id="landingPageProductAddToCart">
+    <div class="kuAddtocart" data-id="<%=dataLocal.id%>">
+        <div class="kuCartBtn">
+            <a target="_self" href="javascript:void(0)" class="kuAddtocartBtn kuLandingAddToCartBtn"><%=helper.translate("Add to cart") %></a>
+        </div>
+    </div>
+</script>
+<script type="template/klevu" id="klevuLandingTemplateQuickView">
+    <div class="kuModal"  data-id="<%=data.selected_product.id%>">
+        <div class="kuModal-content">
+            <div class="productQuickViewWrapper">
+                <div class="productQuick-Close">
+                    <span class="close-button">×</span>
+                </div>
+                <div class="productQuick-imgBlock">
+                    <div class="imgWrap">
+                        <img src="<%= data.selected_product.image %>" alt="<%=helper.translate(data.selected_product.name)%>" title="
+							<%=helper.translate(data.selected_product.name)%>" />
+                    </div>
+                </div>
+                <div class="productQuick-contentBlock">
+                    <div class="productQuick-title kuModalProductName"><%=helper.translate(data.selected_product.name)%>
+                    </div>
+                    <div class="productQuick-sku">
+							<span class="productQuick-label"><%=helper.translate("SKU:") %>
+                            </span>
+                        <span><%=data.selected_product.sku%>
+							</span>
+                    </div>
+                    <div class="productQuick-divider"></div>
+                    <div class="productQuick-Price">
+                        <div class="productQuick-salePrice">
+								<span><%=helper.processCurrency(data.selected_product.currency,parseFloat(data.selected_product.salePrice))%>
+								</span>
+                        </div>
+                    </div>
+                    <div class="productQuick-shortDesc"><% var shortDesc = (data.selected_product.shortDesc) ? data.selected_product.shortDesc + "..." : ""%>
+                        <span><%=shortDesc%>
+							</span>
+                    </div>
+                    <div class="productQuick-extraInfo">
+                        <div class="productQuick-stockStatus">
+                            <span class="productQuick-label"><%=helper.translate("Stock Status:") %></span>
+                            <span><% var productStock = (data.selected_product.inStock == "yes") ? helper.translate("In Stock") : helper.translate("Out Of Stock") %><%=productStock%>
+								</span>
+                        </div>
+
+
+                        <%=helper.render('quickViewProductSwatch',scope,data,data.selected_product) %>
+
+                        <div class="productQuick-tags">
+                            <span class="productQuick-label"><%=helper.translate("Tags:") %></span>
+                            <span><%=helper.translate(data.selected_product.tags)%>
+								</span>
+                        </div>
+                    </div>
+                    <div class="productQuick-addToCart">
+                        <a target="_self" href="<%=data.selected_product.url%>" class="kuBtn kuBtn-primary-outline kuModalProductURL"><%=helper.translate("View details") %>
+                        </a>
+                        <a target="_self" href="<%=data.selected_product.url%>" class="kuBtn kuBtn-primary kuModalProductCart"><%=helper.translate("Add to cart") %></a>
+                    </div>
+                </div>
+                <div class="kuClearfix"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="template/klevu" id="landingPageProductColorSwatches">
+    <% if(dataLocal.swatchesInfo && dataLocal.swatchesInfo.length){ %>
+    <div class="kuSwatches">
+        <% var swatchIndex = 1; helper.each(dataLocal.swatchesInfo,function(key,item){ if(swatchIndex > 3){ return true; } %>
+        <div class="kuSwatchItem"> <a target="_self" href="javascript:void(0)" data-variant="<%=item.variantId%>" class="kuSwatchLink klevuLandingSwatchColorGrid" title="<%=item.variantColor%>" style="background-color:<%=item.variantColor%>"></a></div>
+        <% swatchIndex++; });%>
+        <% if(dataLocal.swatchesInfo.length > 3){ %>
+        <div class="kuSwatchItem kuSwatchMore">
+            <a target="_self" href="<%=dataLocal.url%>" class="kuSwatchLink">
+                       <span class="kuSwatchMoreText">
+                           +<%=(dataLocal.swatchesInfo.length-3)%>
+                       </span>
+            </a>
+        </div>
+        <% } %>
+    </div>
+    <% } %>
+</script>
+
