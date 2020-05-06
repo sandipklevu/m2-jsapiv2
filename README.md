@@ -28,6 +28,5 @@ php bin/magento setup:static-content:deploy
 Please visit this page to change API Key - https://github.com/klevu/jsv2-early-adopters/tree/master/getting-started/5-your-api-key/magento2#once-your-api-key-has-been-activated
 
 
-```
 <h2>Any questions</h2>
 Reach out to support@klevu.com
