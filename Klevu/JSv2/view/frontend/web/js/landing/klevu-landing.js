@@ -87,6 +87,29 @@ klevu.coreEvent.attach("setRemoteConfigLanding", {
             }
         });
 
+        /** Content Tab */
+        klevu.search.landing.getScope().chains.request.build.add({
+            name: "addContentList",
+            fire: function(data, scope) {
+                var  parameterMap = klevu.getSetting(scope.kScope.settings, "settings.search.map", false);
+
+                var contentList = klevu.extend( true , {}  , parameterMap.recordQuery );
+                var quickStorage = klevu.getSetting(scope.kScope.settings , "settings.storage");
+
+                contentList.id = "contentList";
+                contentList.typeOfRequest = "SEARCH";
+                contentList.settings.query.term  = data.context.term;
+                contentList.settings.typeOfRecords = ["KLEVU_CMS"];
+                contentList.settings.searchPrefs = ["searchCompoundsAsAndQuery"];
+                contentList.settings.limit = 12;
+                contentList.filters.filtersToReturn.enabled = true;
+                data.request.current.recordQueries.push(contentList);
+
+                data.context.doSearch = true;
+            }
+        });
+
+
         /** Event to add pagination */
         klevu.search.landing.getScope().chains.template.events.add({
             name: "addPagination",
@@ -170,7 +193,7 @@ klevu.coreEvent.attach("setRemoteConfigLanding", {
 
     /**
      * Function to initialize muliselect facet item
-     * @param {*} dataOptions 
+     * @param {*} dataOptions
      */
     function initialize(dataOptions) {
         var list = dataOptions.dataIdList;
@@ -292,8 +315,8 @@ klevu.coreEvent.attach("setRemoteConfigLanding", {
 
     /**
      * Function to collapse filter list as per the priority list
-     * @param {*} data 
-     * @param {*} collapsedFilters 
+     * @param {*} data
+     * @param {*} collapsedFilters
      */
     function collapse(data, collapsedFilters, itemListId) {
         if (data && data.template && data.template.query && collapsedFilters && collapsedFilters.length) {
@@ -482,7 +505,7 @@ klevu.coreEvent.attach("setRemoteConfigLanding", {
 
     /**
      * Function to update image path in products
-     * @param {*} scope 
+     * @param {*} scope
      */
     function updateImagePath(scope) {
         var data = scope.data;
@@ -523,7 +546,7 @@ klevu.coreEvent.attach("setRemoteConfigLanding", {
     name: "updateMagentoSearchResultProductImagePath",
     fire: function () {
         /**
-         * Event to update product image url for magento store 
+         * Event to update product image url for magento store
          */
         klevu.search.landing.getScope().chains.template.process.success.add({
             name: "updateProductImagePath",

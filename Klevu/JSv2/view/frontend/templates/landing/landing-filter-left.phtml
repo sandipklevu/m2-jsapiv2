@@ -1,6 +1,6 @@
 <script type="template/klevu" id="klevuLandingTemplateFilters">
     <% if(data.query[dataLocal].filters.length > 0 ) { %>
-        <div class="kuFilters">        	
+        <div class="kuFilters">
             <% helper.each(data.query[dataLocal].filters,function(key,filter){ %>
                 <% if(filter.type == "OPTIONS"){ %>
                     <div class="kuFilterBox klevuFilter <%=(filter.multiselect)?'kuMulticheck':''%>" data-filter="<%=filter.key%>" <% if(filter.multiselect){ %> data-singleselect="false" <% } else { %> data-singleselect="true"<% } %>>
@@ -22,7 +22,7 @@
                                             <% } %>
                                         </a>
                                     </li>
-                                    
+
                                 <%  }); %>
                             </ul>
                             <% if(filter.options.length > 5 ) { %>
@@ -38,18 +38,18 @@
                         	<% var filter_label = (filter.label=="klevu_price") ? "price" : filter.label; %>
                             <%=filter_label%>
                         </div>
-                        <div class="kuFilterNames sliderFilterNames <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">                           
+                        <div class="kuFilterNames sliderFilterNames <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">
   							<div class="kuPriceSlider klevuSliderFilter" data-query = "<%=dataLocal%>">
   								<div data-querykey = "<%=dataLocal%>" class="noUi-target noUi-ltr noUi-horizontal noUi-background kuSliderFilter kuPriceRangeSliderFilter<%=dataLocal%>"></div>
                                 <div class="kuSliderVal">
                                     <div class="kuSliderVal-min">
-                                        <span class="kulabel">Min</span> 
+                                        <span class="kulabel">Min</span>
                                         <span class="kuCurrency"></span>
                                         <span class="minValue<%=dataLocal%>" ></span>
                                     </div>
                                     <span class="kuSliderTo">To</span>
                                     <div class="kuSliderVal-max">
-                                        <span class="kulabel">Max</span> 
+                                        <span class="kulabel">Max</span>
                                         <span class="kuCurrency"></span>
                                         <span class="maxValue<%=dataLocal%>"></span>
                                     </div>
@@ -62,8 +62,9 @@
                 <% } %>
             <% }); %>
             <div class="kuFiltersFooter">
-            	<a href="javascript:void(0)" class="kuBtn kuFacetsSlideOut kuMobileFilterCloseBtn"><%=helper.translate("Close")%></a>
-  			</div>
+                <a href="javascript:void(0)" class="kuBtn kuFacetsSlideOut kuMobileFilterCloseBtn"><%=helper.translate("Close")%></a>
+            </div>
         </div>
+
     <% } %>
 </script>

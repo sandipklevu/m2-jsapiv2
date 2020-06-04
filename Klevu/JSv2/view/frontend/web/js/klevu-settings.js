@@ -10,7 +10,7 @@ function startup(klevu) {
         search : {
             searchBoxSelector : "#search" ,
             searchBoxTarget: false,
-            minChars : 1 ,
+            minChars : 0,
             placeholder : "Search" ,
             showQuickOnEnter : false ,
             fullPageLayoutEnabled : false,

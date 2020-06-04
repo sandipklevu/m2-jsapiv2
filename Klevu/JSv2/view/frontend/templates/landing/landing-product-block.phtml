@@ -1,6 +1,8 @@
 <script type="template/klevu" id="klevuLandingTemplateProductBlock">
     <li class="klevuProduct" data-id="<%=dataLocal.id%>">
         <div class="kuProdWrap">
+            <%=helper.render('landingProductBadge', scope, data, dataLocal) %>
+
             <%if(dataLocal.stickyLabelHead && dataLocal.stickyLabelHead != "") { %>
                 <div class="kuDiscountBadge">
                     <span class="kuiscountTxt"><%=dataLocal.stickyLabelHead%><span><%=dataLocal.stickyLabelTail%></span></span>
@@ -25,6 +27,7 @@
                         <%=helper.render('landingProductSwatch',scope,data,dataLocal) %>
                     </div>
                 </div>
+                <%=helper.render('landingProductStock', scope, data, dataLocal) %>
                 <div class="kuPrice">
                     <% if(dataLocal.ondiscount && dataLocal.ondiscount == "true") { %>
                         <% if(dataLocal.salePrice ) { %><div class="kuSalePrice kuSpecialPrice"><%=helper.processCurrency(dataLocal.currency,parseFloat(dataLocal.salePrice) )%></div><% } %>
@@ -34,6 +37,7 @@
                     <% } %>
                     <div class="kuClearBoth"></div>
                 </div>
+                <%=helper.render('landingProductVATLabel', scope, data, dataLocal) %>
                 <%=helper.render('landingPageProductAddToCart',scope,data,dataLocal) %>
             </div>
             <div class="kuClearLeft"></div>
@@ -126,4 +130,21 @@
     </div>
     <% } %>
 </script>
+<script type="template/klevu" id="searchResultProductVATLabel">
+    <% if(dataLocal.inclusiveVAT == true){ %>
+    <div class="kuCaptionVat">Incl. VAT</div>
+    <% } %>
+</script>
 
+<script type="template/klevu" id="searchResultProductStock">
+    <% var productStockStatus = (dataLocal.inStock == "yes") ? "In stock" : "Out of stock" %>
+    <div class="<%=(dataLocal.inStock == 'yes') ? 'kuCaptionStockIn' : 'kuCaptionStockOut'%>">
+        <%= productStockStatus %>
+    </div>
+</script>
+
+<script type="template/klevu" id="searchResultProductBadge">
+    <%if(dataLocal.sku && dataLocal.sku != "") { %>
+    <div class="kuDiscountBadge"><span class="kuDiscountTxt"><%=dataLocal.sku%></span></div>
+    <% } %>
+</script>

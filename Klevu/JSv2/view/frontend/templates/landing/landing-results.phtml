@@ -2,29 +2,25 @@
     <div class="kuResultsListing">
         <div class="productList klevuMeta" data-section="productList">
             <div class="kuResultContent">
-                <div class="kuResultsListing">
-                    <div class="productList klevuMeta" data-section="productList">
-                        <div class="kuResultContent">
+                <a href="javascript:void(0)" class="kuBtn kuMobileFilterBtn kuFacetsSlideIn"><%=helper.translate("Filters")%></a>
+                <?php /*<%=helper.render('filtersTop',scope,data,"productList") %>*/ ?>
 
-                            <%=helper.render('filters',scope,data,"productList") %>
+                <%=helper.render('filters',scope,data,"productList") %>
 
-
-                        </div>
-                    </div>
-                </div>
                 <div class="kuResultWrap <%=(data.query.productList.filters.length == 0 )?'kuBlockFullwidth':''%>">
 
                     <%=helper.render('sortBy',scope,data,"productList") %>
                     <%=helper.render('limit',scope,data,"productList") %>
-                    <%=helper.render('pagination',scope,data,"productList") %>
+                    <!--<%=helper.render('pagination',scope,data,"productList") %>-->
+                    <%=helper.render('customLandingPagePagination',scope,data,"productList") %>
 
                     <div class="kuClearBoth"></div>
                     <div class="kuResults kuGridView">
                         <ul>
                             <% helper.each(data.query.productList.result,function(key,item){ %>
-                                <% if(item.typeOfRecord == "KLEVU_PRODUCT") { %>
-                                    <%=helper.render('productBlock',scope,data,item) %>
-                                <% }%>
+                            <% if(item.typeOfRecord == "KLEVU_PRODUCT") { %>
+                            <%=helper.render('productBlock',scope,data,item) %>
+                            <% }%>
                             <% }); %>
                         </ul>
                         <div class="kuClearBoth"></div>
@@ -37,5 +33,174 @@
                 </div>
             </div>
         </div>
+        <!-- Content Tab started -->
+        <div class="contentList klevuMeta" data-section="contentList">
+            <div class="kuResultContent">
+                <%=helper.render('filters',scope,data,"contentList") %>
+                <div class="kuResultWrap <%=(data.query.contentList.filters.length == 0 )?'kuBlockFullwidth':''%>">
+                    <%=helper.render('sortBy',scope,data,"contentList") %>
+                    <%=helper.render('limit',scope,data,"contentList") %>
+                    <%=helper.render('pagination',scope,data,"contentList") %>
+                    <div class="kuClearBoth"></div>
+                    <div class="kuResults kuGridView">
+                        <ul>
+                            <% helper.each(data.query.contentList.result,function(key,item){ %>
+                            <% if(item.typeOfRecord == "KLEVU_CMS") { %>
+                            <%=helper.render('contentBlock',scope,data,item) %>
+                            <% }%>
+                            <% }); %>
+                        </ul>
+                        <div class="kuClearBoth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </script>
+
+<script type="template/klevu" id="customLandingPagePaginationBar">
+    <% if(data.query[dataLocal].result.length > 0 ) { %>
+    <% var productListLimit = data.query[dataLocal].meta.noOfResults; %>
+    <% var productListTotal = data.query[dataLocal].meta.totalResultsFound - 1; %>
+    <div class="kuPaginationBar">
+        <% if(data.query[dataLocal].meta.offset > 0) { %>
+        <a target="_self" href="#" class="kuPaginate kuFirst" data-offset="0"><%=helper.translate("First")%></a>
+        <a target="_self" href="#" class="kuPaginate kuPrevious"
+           data-offset="<%=(data.query[dataLocal].meta.offset-productListLimit)%>"><%=helper.translate("Previous")%></a>
+        <% } %>
+
+        <% if(data.query[dataLocal].meta.offset > 0) { %>
+        <a target="_self" href="#" class="kuPaginate kuStart"
+           data-offset="<%=(data.query[dataLocal].meta.offset-productListLimit)%>"><%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit))%></a>
+        <% } %>
+        <a target="_self" href="javascript:void(0);" class="kuActive"><%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit)+1)%></a>
+
+        <% if(productListTotal >= data.query[dataLocal].meta.offset+productListLimit) { %>
+        <a target="_self" href="#" class="kuPaginate kuEnd"
+           data-offset="<%=(data.query[dataLocal].meta.offset+productListLimit)%>"><%=(Math.ceil(data.query[dataLocal].meta.offset/productListLimit)+2)%></a>
+        <% } %>
+        <% if(productListTotal >= data.query[dataLocal].meta.offset+productListLimit) { %>
+        <a target="_self" href="#" class="kuPaginate kuNext"
+           data-offset="<%=(data.query[dataLocal].meta.offset+productListLimit)%>"><%=helper.translate("Next")%></a>
+        <a target="_self" href="#" class="kuPaginate kuLast"
+           data-offset="<%=(Math.floor(productListTotal/productListLimit)*productListLimit)%>"><%=helper.translate("Last")%></a>
+        <% } %>
+    </div>
+    <% } %>
+</script>
+
+<script type="template/klevu" id="klevuLandingTemplateTopFilters">
+    <% if(data.query[dataLocal].filters.length > 0 ) { %>
+    <div class="kuFilters">
+
+        <% helper.each(data.query[dataLocal].filters,function(key,filter){ %>
+        <% if(filter.type == "OPTIONS"){ %>
+        <div class="kuFilterBox klevuFilter <%=(filter.multiselect)?'kuMulticheck':''%>" data-filter="<%=filter.key%>"
+        <% if(filter.multiselect){ %> data-singleselect="false" <% } else { %> data-singleselect="true"<% } %>>
+        <div class="kuFilterHead <%=(filter.isCollapsed) ? 'kuExpand' : 'kuCollapse'%>">
+            <% var filter_label = (filter.label=="klevu_price") ? "price" : filter.label; %>
+            <%=filter_label%>
+        </div>
+        <div class="kuFilterNames <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">
+            <ul>
+                <% helper.each(filter.options,function(key,filterOption){ %>
+                <li
+                <% if(filterOption.selected ==true) { %> class="kuSelected"<% } %>>
+                <a target="_self" href="#" title="<%=filterOption.value%>"
+                   class="klevuFilterOption<% if(filterOption.selected ==true) { %> klevuFilterOptionActive<% } %>"
+                   data-value="<%=filterOption.value%>">
+                    <span class="kuFilterIcon"></span>
+                    <span class="kufacet-text"><%=filterOption.name%></span>
+                    <% if(filterOption.selected ==true) { %>
+                    <span class="kuFilterCancel">X</span>
+                    <% } else { %>
+                    <span class="kuFilterTotal"><%=filterOption.count%></span>
+                    <% } %>
+                </a>
+                </li>
+
+                <% }); %>
+            </ul>
+            <% if(filter.options.length > 5 ) { %>
+            <div class="kuShowOpt">
+                <span class="kuFilterDot"></span><span class="kuFilterDot"></span><span class="kuFilterDot"></span>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <% } else if(filter.type == "SLIDER")  { %>
+    <div class="kuFilterBox klevuFilter data-filter="<%=filter.key%>">
+    <div class="kuFilterHead <%=(filter.isCollapsed) ? 'kuExpand' : 'kuCollapse'%>">
+        <% var filter_label = (filter.label=="klevu_price") ? "price" : filter.label; %>
+        <%=filter_label%>
+    </div>
+    <div class="kuFilterNames sliderFilterNames <%=(filter.isCollapsed) ? 'kuFilterCollapse' : ''%>">
+        <div class="kuPriceSlider klevuSliderFilter" data-query="<%=dataLocal%>">
+            <div data-querykey="<%=dataLocal%>"
+                 class="noUi-target noUi-ltr noUi-horizontal noUi-background kuSliderFilter kuPriceRangeSliderFilter<%=dataLocal%>"></div>
+            <div class="kuSliderVal">
+                <div class="kuSliderVal-min">
+                    <span class="kulabel">Min</span>
+                    <span class="kuCurrency"></span>
+                    <span class="minValue<%=dataLocal%>"></span>
+                </div>
+                <span class="kuSliderTo">To</span>
+                <div class="kuSliderVal-max">
+                    <span class="kulabel">Max</span>
+                    <span class="kuCurrency"></span>
+                    <span class="maxValue<%=dataLocal%>"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <% } else { %>
+
+    <% } %>
+    <% }); %>
+
+    <div class="kuFiltersFooter">
+        <a target="_self" href="javascript:void(0)" class="kuBtn kuFacetsSlideOut kuMobileFilterCloseBtn"><%=helper.translate("Close")%></a>
+    </div>
+
+
+    </div>
+    <% } %>
+</script>
+
+
+<script type="template/klevu" id="klevuLandingTemplateContentBlock">
+    <li class="klevuProduct" data-id="<%=dataLocal.id%>">
+        <div class="kuProdWrap">
+            <%if(dataLocal.stickyLabelHead && dataLocal.stickyLabelHead != "") { %>
+            <div class="kuDiscountBadge">
+                <span
+                    class="kuiscountTxt"><%=dataLocal.stickyLabelHead%><span><%=dataLocal.stickyLabelTail%></span></span>
+            </div>
+            <% } %>
+            <div class="kuProdTop">
+                <% if(dataLocal["image"] != undefined && dataLocal.image !== "") { %>
+                <div class="klevuImgWrap">
+                    <a target="_self" href="<%=dataLocal.url%>" class="klevuProductClick"><span
+                            class="kuprodImgSpan"><img src="<%=dataLocal.image%>" alt="<%=dataLocal.name%>"
+                                                       class="kuProdImg"></span></a></div>
+                <% } %>
+            </div>
+            <% var desc =
+            [dataLocal.summaryAttribute,dataLocal.packageText,dataLocal.summaryDescription].filter(function(el) { return
+            el; }); desc = desc.join(" "); %>
+            <div class="kuProdBottom">
+                <div class="kuNameDesc">
+                    <div class="kuName"><a target="_self" href="<%=dataLocal.url%>" class="klevuProductClick"><%=dataLocal.name%></a>
+                    </div>
+                    <div class="kuDesc"><%=desc%></div>
+                </div>
+            </div>
+            <div class="kuClearLeft"></div>
+        </div>
+    </li>
+</script>
+
+

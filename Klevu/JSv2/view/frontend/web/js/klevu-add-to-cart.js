@@ -21,7 +21,7 @@
      * @param {*} quantity
      */
     function sendAddToCartRequest(variantId, quantity) {
-        klevu_addtocart(variantId, quantity);
+        klevu_addtocart(1, quantity);
         return;
         /*var formKeyM2 = jQuery.cookie('form_key');
         var requestPayload = {
