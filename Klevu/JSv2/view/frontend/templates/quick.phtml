@@ -1,6 +1,35 @@
 <?php /** @var $block \Magento\Framework\View\Element\Template */ ?>
 <?php /** Refer quick-separate.phtml for each CSS file */?>
-<link rel="stylesheet" type="text/css" media="all" href="<?= $block->getViewFileUrl('Klevu_JSv2::css/quick/klevu-quick-merge.css'); ?>" />
+<?php /** link rel="stylesheet" type="text/css" media="all" href="<?= $block->getViewFileUrl('Klevu_JSv2::css/quick/klevu-quick-merge.css'); ?>" />
 <script type="text/javascript" src="//js.klevu.com/klevu-js-v2/2.0/klevu.js"></script>
-<?php /** Refer quick-separate.phtml for each JS file */?>
-<script type="text/javascript" src="<?= $block->getViewFileUrl('Klevu_JSv2::js/quick/klevu-quick-merge.js') ?>"></script>
+<?php // Refer quick-separate.phtml for each JS file ?>
+<script type="text/javascript" src="<?= $block->getViewFileUrl('Klevu_JSv2::js/quick/klevu-quick-merge.js') ?>"></script>*/?>
+
+<!-- Include JS Library -->
+<script src="https://js.klevu.com/core/v2/klevu.js"></script> 
+
+<!-- Include Quick Search Theme -->
+<script src="https://js.klevu.com/theme/default/v2/quick-search-theme.js"></script>
+
+ 
+<!-- Configure Klevu for your store -->
+    <script type="text/javascript">
+        klevu.interactive(function () {
+            var options = {
+                url : {
+                    landing : '/search-results',
+                    protocol: 'https:',
+                    search: 'https://eucs3v2.ksearchnet.com/cs/v2/search' // your search URL
+                },
+                search: {
+                    minChars: 0,
+                    searchBoxSelector: "#search", // your search input selector
+                    apiKey: "klevu-xxxxxxxxxx 
+                },
+                analytics: {
+                    apiKey: 'klevu-xxxxxxxxxx' 
+                }
+            };
+            klevu(options);
+        });
+    </script>
