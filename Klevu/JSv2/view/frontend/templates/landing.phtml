@@ -1,10 +1,13 @@
 <?php /** @var $block \Magento\Framework\View\Element\Template */ ?>
 <?php /** refer landing-separate.phtml for each CSS file */?>
-<link rel="stylesheet" type="text/css" media="all" href="<?= $block->getViewFileUrl('Klevu_JSv2::css/landing/klevu-landing-merge.css'); ?>" />
-
-<?php /** Price slider library */?>
+<?php /** <link rel="stylesheet" type="text/css" media="all" href="<?= $block->getViewFileUrl('Klevu_JSv2::css/landing/klevu-landing-merge.css'); ?>" />
 <link rel="stylesheet" type="text/css" media="all" href="<?= $block->getViewFileUrl('Klevu_JSv2::lib/nouislider.min.css'); ?>" />
 <script type="text/javascript" src="<?= $block->getViewFileUrl('Klevu_JSv2::lib/nouislider.js') ?>"></script>
-
-<?php /** Refer landing-separate.phtml for each JS file */?>
 <script type="text/javascript" src="<?= $block->getViewFileUrl('Klevu_JSv2::js/landing/klevu-landing-merge.js') ?>"></script>
+*/?>
+
+<!-- Include Search Results Theme -->
+<script src="https://js.klevu.com/theme/default/v2/landing-page-theme.js"></script>
+
+<!-- Add a placeholder where the search results will be injected -->
+<div class="klevuLanding"></div>
