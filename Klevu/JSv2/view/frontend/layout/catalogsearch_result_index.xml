@@ -6,7 +6,7 @@
         <referenceContainer name="head.additional">
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing" template="Klevu_JSv2::landing.phtml" after="klevu_quick" />
 
-            <block class="Magento\Framework\View\Element\Template" name="klevu_landing_base" template="Klevu_JSv2::landing/landing-base.phtml" after="-" />
+<!--            <block class="Magento\Framework\View\Element\Template" name="klevu_landing_base" template="Klevu_JSv2::landing/landing-base.phtml" after="-" />
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_filters" template="Klevu_JSv2::landing/landing-filters.phtml" after="-" />
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_no_results_found" template="Klevu_JSv2::landing/landing-no-results-found.phtml" after="-" />
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_pagination" template="Klevu_JSv2::landing/landing-pagination.phtml" after="-" />
@@ -15,7 +15,7 @@
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_filters-left" template="Klevu_JSv2::landing/landing-filter-left.phtml" after="-" />
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_sort" template="Klevu_JSv2::landing/landing-sort.phtml" after="-" />
             <block class="Magento\Framework\View\Element\Template" name="klevu_landing_limit" template="Klevu_JSv2::landing/landing-limit.phtml" after="-" />
-
+-->
 
         </referenceContainer>
 
